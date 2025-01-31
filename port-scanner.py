@@ -77,7 +77,7 @@ def validate_ports(target_ports):
         except ValueError:
             raise ValueError("Invalid port range format")
     
-    elif len(target_ports) == 1:
+    elif "-" not in target_ports and "," not in target_ports:
         try:
             port = int(target_ports.strip())
             if 0 <= port <= 65536:
@@ -153,5 +153,5 @@ def main():
     duration = time.time() - start_time
     print(f"\nScan completed in {duration:.2f} seconds")
 
-if__name__== "__main__":
+if __name__ == "__main__":
     main()
