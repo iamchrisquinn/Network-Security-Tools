@@ -77,11 +77,11 @@ def validate_ports(target_ports):
         except ValueError:
             raise ValueError("Invalid port range format")
     
-    elif "-" not in target_ports and "," not in target_ports:
+    else:
         try:
             port = int(target_ports.strip())
             if 0 <= port <= 65536:
-                return port
+                return [port]
             raise ValueError(f"Port {port} is not between 0-65536")
         except ValueError:
             raise ValueError("Invalid single port format")
@@ -142,14 +142,7 @@ def display_results(open_ports):
 def main():
     start_time = time.time()
     ip, ports = parse_input()
-    if len(ports) > 1:
-        display_results(scan_ports(ip, ports))
-    else:
-        if scan_port(ip, ports):
-            print(f"Port {ports} is open on host {ip}")
-        else:
-            print(f"Port {ports} is closed on host {ip}")
-    
+    display_results(scan_ports(ip, ports))  
     duration = time.time() - start_time
     print(f"\nScan completed in {duration:.2f} seconds")
 
